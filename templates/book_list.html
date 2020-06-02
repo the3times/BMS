@@ -1,0 +1,68 @@
+{% extends 'index.html' %}
+
+
+{% block caption %}
+    <h3 class="panel-title">图书列表</h3>
+{% endblock %}
+
+
+{% block content %}
+    <p><a href="{% url 'book_add' %}" class="btn btn-success">新增</a></p>
+    <table class="table table-hover table-bordered">
+    <thead>
+        <tr>
+            <th>序号</th>
+            <th>图书名称</th>
+            <th>作者</th>
+            <th>图书价格</th>
+            <th>出版日期</th>
+            <th>出版社</th>
+            <th class="text-center">操作</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for book_obj in book_queryset %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ book_obj.name }}</td>
+                <td>
+                    {% for author_obj in book_obj.authors.all %}
+                        {% if forloop.last %}
+                            {{ author_obj }}
+                        {% else %}
+                            {{ author_obj }},
+                        {% endif %}
+                    {% endfor %}
+
+                </td>
+                <td>{{ book_obj.price }}</td>
+                <td>{{ book_obj.publish_date|date:'Y-m-d' }}</td>
+                <td>{{ book_obj.publish.name }}</td>
+                <td class="text-center">
+                    <a href="{% url 'book_edit' book_obj.pk %}" class="btn btn-xs btn-primary">编辑</a>
+                    <button class="btn btn-xs btn-danger btn-delete" id="{{ book_obj.pk }}">删除</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('.btn-delete').click(function () {
+            let delete_id = $(this).attr('id');
+            $.ajax({
+                url: '{% url "book_delete" %}',
+                type: 'post',
+                data: {'delete_id': delete_id},
+                success: function (args) {
+                    alert(args);
+                    window.location.reload();
+                }
+            })
+        })
+    </script>
+
+
+{% endblock %}

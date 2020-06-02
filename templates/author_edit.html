@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+
+
+{% block caption %}
+    <h3 class="panel-title">编辑作者</h3>
+{% endblock %}
+
+
+
+{% block content %}
+    <form action="{% url 'author_edit' author_obj.pk %}" method="post">
+        <p>
+            姓名：
+            <input type="text" class="form-control" name="name" value="{{ author_obj.name }}">
+        </p>
+        <p>
+            年龄：
+            <input type="text" class="form-control" name="age" value="{{ author_obj.age }}">
+        </p>
+        <p>
+            性别：
+            <input type="radio" name="gender" value="0" {% if author_obj.gender == 0%}checked{% endif %} >女
+            <input type="radio" name="gender" value="1" {% if author_obj.gender == 1%}checked{% endif %}>男
+            <input type="radio" name="gender" value="2" {% if author_obj.gender == 2%}checked{% endif %}>保密
+        </p>
+        <p>
+            作者简介：
+            <textarea name="info" id="" class="form-control" cols="30" rows="10">{{ author_obj.info }}</textarea>
+        </p>
+
+        <p>
+            <input type="submit" class="btn btn-success" value="编辑">
+        </p>
+    </form>
+{% endblock %}

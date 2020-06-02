@@ -1,0 +1,44 @@
+{% extends 'index.html' %}
+
+
+{% block caption %}
+    <h3 class="panel-title">新增图书</h3>
+{% endblock %}
+
+
+{% block content %}
+    <form action="{% url 'book_add' %}" method="post">
+        <p>
+            图书名称：
+            <input type="text" class="form-control" name="name">
+        </p>
+        <p>
+            图书价格：
+            <input type="text" class="form-control" name="price">
+        </p>
+        <p>
+            出版日期：
+            <input type="date" class="form-control" name="publish_date">
+        </p>
+        <p>
+            出版社：
+            <select name="publish" id="" class="form-control">
+                {% for publish_obj in publish_queryset %}
+                    <option value="{{ publish_obj.pk }}">{{ publish_obj.name }}</option>
+                {% endfor %}
+
+            </select>
+        </p>
+        <p>
+            作者：
+            <select name="authors" id="" multiple class="form-control">
+                {% for author_obj in author_queryset %}
+                    <option value="{{ author_obj.pk }}">{{ author_obj.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            <input type="submit" class="btn btn-success" value="新增">
+        </p>
+    </form>
+{% endblock %}
