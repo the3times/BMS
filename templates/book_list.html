@@ -9,7 +9,7 @@
 {% block content %}
     <p><a href="{% url 'book_add' %}" class="btn btn-success">新增</a></p>
     <table class="table table-hover table-bordered">
-    <thead>
+        <thead>
         <tr>
             <th>序号</th>
             <th>图书名称</th>
@@ -19,8 +19,8 @@
             <th>出版社</th>
             <th class="text-center">操作</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         {% for book_obj in book_queryset %}
             <tr>
                 <td>{{ forloop.counter }}</td>
@@ -40,27 +40,59 @@
                 <td>{{ book_obj.publish.name }}</td>
                 <td class="text-center">
                     <a href="{% url 'book_edit' book_obj.pk %}" class="btn btn-xs btn-primary">编辑</a>
-                    <button class="btn btn-xs btn-danger btn-delete" id="{{ book_obj.pk }}">删除</button>
+                    <button class="btn btn-xs btn-danger btn-delete" delete_id="{{ book_obj.pk }}">删除</button>
                 </td>
             </tr>
         {% endfor %}
-    </tbody>
+        </tbody>
     </table>
 {% endblock %}
 
 {% block js %}
+
+
+
+
+
     <script>
         $('.btn-delete').click(function () {
-            let delete_id = $(this).attr('id');
-            $.ajax({
-                url: '{% url "book_delete" %}',
-                type: 'post',
-                data: {'delete_id': delete_id},
-                success: function (args) {
-                    alert(args);
-                    window.location.reload();
-                }
-            })
+            let currentBtn = $(this);       // 必须放着这个位置（当前点击的this），不要放在 if(isConfirm)里面了
+            swal({
+                    title: "确定删除?",
+                    text: "删除后将就找不回来了！",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonClass: "btn-danger",
+                    confirmButtonText: "确定，删除它",
+                    cancelButtonText: "算不吧，不删了!",
+                    closeOnConfirm: false,
+                    closeOnCancel: false
+                },
+                function(isConfirm) {
+                    if (isConfirm) {
+                        $.ajax({
+                            url: '{% url "book_delete" %}',
+                            type: 'post',
+                            data: {'delete_id': currentBtn.attr('delete_id')},
+                            success: function (args) {
+                                if (args.status_code === 1111){
+                                    currentBtn.parent().parent().remove();
+                                    swal("删除成功！", args.msg, "success");
+                                }else {
+                                    swal("删除失败！", args.msg, "error");
+                                }
+                            }
+                        });
+                    } else {
+                        swal("取消操作", "没有删除该书籍 :)", "error");
+                    }
+                });
+
+
+
+
+
+
         })
     </script>
 

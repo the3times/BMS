@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, HttpResponse
+from django.http import JsonResponse
 from app01 import models
 
 
@@ -60,10 +61,16 @@ def book_edit(request, edit_id):
 
 
 def book_delete(request):
-    delete_id = request.POST.get('delete_id')
-    models.Book.objects.filter(pk=delete_id).delete()
+    back_msg = {'status_code': 1111, 'msg': ''}
+    try:
+        delete_id = request.POST.get('delete_id')
+        models.Book.objects.filter(pk=delete_id).delete()
+        back_msg['msg'] = '删除成功'
+    except:
+        back_msg['status_code'] = 2222
+        back_msg['msg'] = '删除失败'
     # 级联删除
-    return HttpResponse('删除成功！！！')
+    return JsonResponse(back_msg)
 
 
 def author_list(request):
