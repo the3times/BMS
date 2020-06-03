@@ -29,5 +29,5 @@ urlpatterns = [
     url(r'^author_list/', views.author_list, name='author_list'),
     url(r'^author_add/', views.author_add, name='author_add'),
     url(r'^author_edit/(\d+)/', views.author_edit, name='author_edit'),
-    url(r'^author_delete/(\d+)/', views.author_delete, name='author_delete'),
+    url(r'^author_delete/', views.author_delete, name='author_delete'),
 ]

@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 
+{% load static %}
 
 {% block caption %}
     <h3 class="panel-title">作者列表</h3>
@@ -30,11 +31,14 @@
 
                 <td class="text-center">
                     <a href="{% url 'author_edit' author_obj.pk %}" class="btn btn-xs btn-primary">编辑</a>
-                    <a href="{% url 'author_delete' author_obj.pk %}" class="btn btn-xs btn-danger">删除</a>
-
+                    <button class="btn btn-xs btn-danger btn-delete" delete_url="{% url 'author_delete' %}" delete_id="{{ author_obj.pk }}">删除</button>
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/cancel_confirm.js' %}"></script>
 {% endblock %}

@@ -102,7 +102,14 @@ def author_edit(request, edit_id):
     return redirect('author_list')
 
 
-def author_delete(request, delete_id):
+def author_delete(request):
+    back_msg = {'status_code': 1111, 'msg': ''}
+    try:
+        delete_id = request.POST.get('delete_id')
+        models.Author.objects.filter(pk=delete_id).delete()
+        back_msg['msg'] = '删除成功'
+    except:
+        back_msg['status_code'] = 2222
+        back_msg['msg'] = '删除失败'
 
-    models.Author.objects.filter(pk=delete_id).delete()
-    return redirect('author_list')
+    return JsonResponse(back_msg)
