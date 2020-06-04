@@ -1,6 +1,36 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from app01 import models
+from app01 import my_forms
+
+
+def register(request):
+    form_obj = my_forms.UserRegForm()
+    if request.method == 'POST':
+        form_obj = my_forms.UserRegForm(request.POST)
+        if form_obj.is_valid():
+            form_obj.cleaned_data.pop('re_password')
+            models.User.objects.create(**form_obj.cleaned_data)
+            return redirect('index')
+
+    return render(request, 'register.html', locals())
+
+
+def login(request):
+    form_obj = my_forms.UserLogForm()
+
+    if request.method == 'POST':
+        form_obj = my_forms.UserLogForm(request.POST)
+        if form_obj.is_valid():
+            name = form_obj.cleaned_data.get('username')
+            pawd = form_obj.cleaned_data.get('password')
+            if models.User.objects.filter(username=name, password=pawd).exists():
+                return redirect('index')
+            login_error = '用户名或密码错误'
+
+    return render(request, 'login.html', locals())
+
+
 
 
 def index(request):
