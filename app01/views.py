@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
 from app01 import models
 from app01 import my_forms
+from utils.pagination import get_page_queryset
 
 
 def register(request):
@@ -39,6 +40,7 @@ def index(request):
 
 def book_list(request):
     book_queryset = models.Book.objects.all()
+    page_obj, page_queryset = get_page_queryset(request, book_queryset)
     return render(request, 'book_list.html', locals())
 
 
@@ -105,6 +107,7 @@ def book_delete(request):
 
 def author_list(request):
     author_queryset = models.Author.objects.all()
+    page_obj, page_queryset = get_page_queryset(request, author_queryset)
     return render(request, 'author_list.html', locals())
 
 

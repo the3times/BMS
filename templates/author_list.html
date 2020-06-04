@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <tbody>
-        {% for author_obj in author_queryset %}
+        {% for author_obj in page_queryset %}
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ author_obj.name }}</td>
@@ -37,6 +37,9 @@
         {% endfor %}
         </tbody>
     </table>
+
+    {#分页器#}
+    <div class="text-center">{{ page_obj.page_html|safe }}</div>
 {% endblock %}
 
 {% block js %}
