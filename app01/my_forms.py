@@ -70,3 +70,34 @@ class UserLogForm(forms.Form):
                                },
                                widget=forms.widgets.PasswordInput(attrs={'class': 'form-control'},
                                                                   render_value=True))
+
+
+class BookAddForm(forms.Form):
+    name = forms.CharField(label='图书名称',
+                           error_messages={
+                               'required': '图书名称不能为空'
+                           },
+                           widget=forms.widgets.TextInput(attrs={'class':'form-control'}))
+    price = forms.DecimalField(label='价格',
+                           error_messages={
+                               'required': '图书价格不能为空'
+                           },
+                           widget=forms.widgets.TextInput(attrs={'class':'form-control'}))
+    publish_date = forms.DateField(label='出版日期',
+                               error_messages={'required': '出版日期不能为空'},
+                               widget=forms.widgets.DateInput(attrs={'class':'form-control'})
+                            )
+    publish_id = forms.ChoiceField(label='出版社',
+                                error_messages={'required':'出版社不能为空'},
+                                widget=forms.widgets.Select(attrs={'class': 'form-control'})
+                                )
+    author = forms.MultipleChoiceField(
+        label='作者',
+        error_messages={'required':'作者不能为空'},
+        widget=forms.widgets.SelectMultiple(attrs={'class':'form-control'})
+    )
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['publish_id'].choices = models.Publish.objects.values_list('pk', 'name')
+        self.fields['author'].choices = models.Author.objects.values_list('pk', 'name')
