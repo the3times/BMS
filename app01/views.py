@@ -3,6 +3,11 @@ from django.http import JsonResponse
 from app01 import models
 from app01 import my_forms
 from utils.pagination import get_page_queryset
+from utils.login_auth import login_auth
+
+
+
+
 
 
 def register(request):
@@ -11,6 +16,7 @@ def register(request):
         form_obj = my_forms.UserRegForm(request.POST)
         if form_obj.is_valid():
             form_obj.cleaned_data.pop('re_password')
+            print(form_obj.cleaned_data)
             models.User.objects.create(**form_obj.cleaned_data)
             return redirect('index')
 
@@ -19,31 +25,40 @@ def register(request):
 
 def login(request):
     form_obj = my_forms.UserLogForm()
-
     if request.method == 'POST':
         form_obj = my_forms.UserLogForm(request.POST)
         if form_obj.is_valid():
             name = form_obj.cleaned_data.get('username')
             pawd = form_obj.cleaned_data.get('password')
             if models.User.objects.filter(username=name, password=pawd).exists():
-                return redirect('index')
+                target_url = request.GET.get('next') or 'index'    # 登录前要访问的页面或者直接到index
+                response_obj = redirect(target_url)
+                response_obj.set_cookie('is_login', 'this_user_has_been_logined')
+                return response_obj
             login_error = '用户名或密码错误'
 
     return render(request, 'login.html', locals())
 
 
+@login_auth
+def logout(request):
+    response_obj = redirect('login')
+    response_obj.delete_cookie('is_login')
+    return response_obj
 
 
 def index(request):
-    return render(request, 'index.html')
+    return render(request, 'index.html', locals())
 
 
+@login_auth
 def book_list(request):
     book_queryset = models.Book.objects.all()
     page_obj, page_queryset = get_page_queryset(request, book_queryset)
     return render(request, 'book_list.html', locals())
 
 
+@login_auth
 def book_add(request):
 
     form_obj = my_forms.BookAddForm()
@@ -63,6 +78,7 @@ def book_add(request):
     return render(request, 'book_add.html', locals())
 
 
+@login_auth
 def book_edit(request, edit_id):
     if request.method == 'GET':
         book_obj = models.Book.objects.filter(pk=edit_id).first()
@@ -88,6 +104,7 @@ def book_edit(request, edit_id):
     return redirect('book_list')
 
 
+@login_auth
 def book_delete(request):
     back_msg = {'status_code': 1111, 'msg': ''}
     try:
@@ -101,12 +118,14 @@ def book_delete(request):
     return JsonResponse(back_msg)
 
 
+@login_auth
 def author_list(request):
     author_queryset = models.Author.objects.all()
     page_obj, page_queryset = get_page_queryset(request, author_queryset)
     return render(request, 'author_list.html', locals())
 
 
+@login_auth
 def author_add(request):
     if request.method == 'GET':
         return render(request, 'author_add.html')
@@ -119,6 +138,7 @@ def author_add(request):
     return redirect('author_list')
 
 
+@login_auth
 def author_edit(request, edit_id):
     if request.method == 'GET':
         author_obj = models.Author.objects.filter(pk=edit_id).first()
@@ -131,6 +151,7 @@ def author_edit(request, edit_id):
     return redirect('author_list')
 
 
+@login_auth
 def author_delete(request):
     back_msg = {'status_code': 1111, 'msg': ''}
     try:

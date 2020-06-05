@@ -8,7 +8,7 @@
 {% block content %}
     <div class="row">
         <div class="col-md-6">
-            <form action="{% url 'login' %}" method="post" novalidate>
+            <form action="" method="post" novalidate>
                 {% for form in form_obj %}
                     <label for="id_{{ form.name }}">{{ form.label }}:</label>
                     <span style="color: red" class="small error-tip">{{ form.errors.0 }}</span>
