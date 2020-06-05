@@ -29,6 +29,7 @@ def login(request):
             if models.User.objects.filter(username=name, password=pawd).exists():
                 target_url = request.GET.get('next') or 'index'    # 登录前要访问的页面或者直接到index
                 request.session['login_auth_key'] = 'is_login'
+                request.session['username'] = name
                 return redirect(target_url)
             login_error = '用户名或密码错误'
 

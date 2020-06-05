@@ -29,11 +29,12 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                {% if not request.COOKIES.keys %}
+                {% if not request.session.login_auth_key %}
                     <li><a href="{% url 'login' %}">登录</a></li>
                     <li><a href="{% url 'register' %}">注册</a></li>
                 {% endif %}
-                {% if request.COOKIES.keys %}
+                {% if request.session.login_auth_key %}
+                    <li><a href="#">{{ request.session.username }}</a></li>
                     <li><a href="{% url 'logout' %}">退出</a></li>
                 {% endif %}
                 <li class="dropdown">
