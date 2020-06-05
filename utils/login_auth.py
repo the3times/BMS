@@ -6,7 +6,7 @@ def login_auth(func):
     @wraps(func)
     def inner(request, *args, **kwargs):
         target_url = request.get_full_path()    # 获取用户想要访问的url
-        if request.COOKIES.get('is_login'):
+        if request.session.get('login_auth_key'):
             res = func(request, *args, **kwargs)
             return res
         else:

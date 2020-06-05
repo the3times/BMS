@@ -6,10 +6,6 @@ from utils.pagination import get_page_queryset
 from utils.login_auth import login_auth
 
 
-
-
-
-
 def register(request):
     form_obj = my_forms.UserRegForm()
     if request.method == 'POST':
@@ -32,9 +28,8 @@ def login(request):
             pawd = form_obj.cleaned_data.get('password')
             if models.User.objects.filter(username=name, password=pawd).exists():
                 target_url = request.GET.get('next') or 'index'    # 登录前要访问的页面或者直接到index
-                response_obj = redirect(target_url)
-                response_obj.set_cookie('is_login', 'this_user_has_been_logined')
-                return response_obj
+                request.session['login_auth_key'] = 'is_login'
+                return redirect(target_url)
             login_error = '用户名或密码错误'
 
     return render(request, 'login.html', locals())
@@ -42,9 +37,8 @@ def login(request):
 
 @login_auth
 def logout(request):
-    response_obj = redirect('login')
-    response_obj.delete_cookie('is_login')
-    return response_obj
+    request.session.flush()
+    return redirect('login')
 
 
 def index(request):
