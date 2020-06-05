@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="310acfb0-e96e-4b58-b270-280c783b8c07" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/static/js/logout_confirm.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app01/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app01/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/readme.md" afterDir="false" />
@@ -50,13 +51,14 @@
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/static" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/js" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\the3times\Desktop\BMS\static\js" />
       <recent name="C:\Users\the3times\Desktop\BMS\static" />
     </key>
   </component>
@@ -103,7 +105,7 @@
       <workItem from="1591232401390" duration="1233000" />
       <workItem from="1591248829443" duration="75000" />
       <workItem from="1591270731551" duration="9575000" />
-      <workItem from="1591312763443" duration="20981000" />
+      <workItem from="1591312763443" duration="26435000" />
     </task>
     <servers />
   </component>
@@ -115,22 +117,22 @@
       <screen x="0" y="0" width="1280" height="689" />
     </state>
     <state x="421" y="89" key="FileChooserDialogImpl/0.0.1280.689@0.0.1280.689" timestamp="1591248886094" />
-    <state width="1237" height="171" key="GridCell.Tab.0.bottom" timestamp="1591367028221">
+    <state width="1237" height="171" key="GridCell.Tab.0.bottom" timestamp="1591370461513">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="171" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1591367028221" />
-    <state width="1237" height="171" key="GridCell.Tab.0.center" timestamp="1591367028221">
+    <state width="1237" height="171" key="GridCell.Tab.0.bottom/0.0.1280.689@0.0.1280.689" timestamp="1591370461513" />
+    <state width="1237" height="171" key="GridCell.Tab.0.center" timestamp="1591370461513">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="171" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1591367028221" />
-    <state width="1237" height="171" key="GridCell.Tab.0.left" timestamp="1591367028221">
+    <state width="1237" height="171" key="GridCell.Tab.0.center/0.0.1280.689@0.0.1280.689" timestamp="1591370461513" />
+    <state width="1237" height="171" key="GridCell.Tab.0.left" timestamp="1591370461513">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="171" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1591367028221" />
-    <state width="1237" height="171" key="GridCell.Tab.0.right" timestamp="1591367028221">
+    <state width="1237" height="171" key="GridCell.Tab.0.left/0.0.1280.689@0.0.1280.689" timestamp="1591370461513" />
+    <state width="1237" height="171" key="GridCell.Tab.0.right" timestamp="1591370461513">
       <screen x="0" y="0" width="1280" height="689" />
     </state>
-    <state width="1237" height="171" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1591367028221" />
+    <state width="1237" height="171" key="GridCell.Tab.0.right/0.0.1280.689@0.0.1280.689" timestamp="1591370461513" />
     <state x="467" y="58" key="RollbackChangesDialog" timestamp="1591271676632">
       <screen x="0" y="0" width="1280" height="689" />
     </state>

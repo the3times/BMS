@@ -1,6 +1,6 @@
 ## 图书管理系统(BMS)
 
-### 表结构
+### 表关系ORM
 
 ```python
 from django.db import models

@@ -39,7 +39,7 @@ def login(request):
 @login_auth
 def logout(request):
     request.session.flush()
-    return redirect('login')
+    return HttpResponse('OK')
 
 
 def index(request):
