@@ -1,7 +1,11 @@
 {% extends 'index.html' %}
 
 {% load static %}
-<link rel="stylesheet" href="{% static 'css/index.css' %}">
+
+{#{% block css %}#}
+{#    <link rel="stylesheet" href="{% static 'css/index.css' %}">#}
+{#{% endblock %}#}
+
 
 
 {% block caption %}
@@ -13,7 +17,21 @@
 
 
 {% block content %}
-    <p><a href="{% url 'book_add' %}" class="btn btn-success">新增</a></p>
+
+    <form class="navbar-form navbar-left" action="{% url 'book_list' %}">
+        <div class="row">
+            <a href="{% url 'book_add' %}" class="btn btn-success">新增</a>
+            <select name="category" id="" class="form-control">
+                <option value="name">书名</option>
+                <option value="authors__name">作者</option>
+                <option value="publish__name">出版社</option>
+            </select>
+            <div class="form-group">
+                <input type="text" class="form-control" name="content" placeholder="请输入搜索关键词...">
+            </div>
+            <button type="submit" class="btn btn-default">搜索</button>
+        </div>
+    </form>
     <table class="table table-hover table-bordered">
         <thead>
         <tr>

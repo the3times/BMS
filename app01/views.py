@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
+from django.db.models import Q
 from django import views
 from django.utils.decorators import method_decorator
 from app01 import models
@@ -53,6 +54,20 @@ def index(request):
 @login_auth
 def book_list(request):
     book_queryset = models.Book.objects.all()
+
+    category = request.GET.get('category')
+    content = request.GET.get('content')
+    if content:
+        q = Q()
+        q.connector = 'or'
+        content_list = content.split(' ')
+        for item in content_list:
+            q.children.append((f'{category}__contains', item))
+        try:
+            book_queryset = models.Book.objects.filter(q)
+        except Exception:
+            book_queryset = models.Book.objects.filter(pk=-1)
+
     page_obj, page_queryset = get_page_queryset(request, book_queryset)
     return render(request, 'book_list.html', locals())
 
