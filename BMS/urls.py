@@ -21,12 +21,12 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
 
     url(r'^register/', views.register, name='register'),
-    url(r'^login/', views.login, name='login'),
+    url(r'^login/', views.LoginView.as_view(), name='login'),
     url(r'^logout/', views.logout, name='logout'),
 
     url(r'^$', views.index, name='index'),
     url(r'^book_list/', views.book_list, name='book_list'),
-    url(r'^book_add/', views.book_add, name='book_add'),
+    url(r'^book_add/', views.BookAdd.as_view(), name='book_add'),
     url(r'^book_edit/(\d+)/', views.book_edit, name='book_edit'),
     url(r'^book_delete/', views.book_delete, name='book_delete'),
 

@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, HttpResponse
 from django.http import JsonResponse
+from django import views
+from django.utils.decorators import method_decorator
 from app01 import models
 from app01 import my_forms
 from utils.pagination import get_page_queryset
@@ -14,14 +16,17 @@ def register(request):
             form_obj.cleaned_data.pop('re_password')
             print(form_obj.cleaned_data)
             models.User.objects.create(**form_obj.cleaned_data)
-            return redirect('index')
+            return redirect('login')
 
     return render(request, 'register.html', locals())
 
 
-def login(request):
-    form_obj = my_forms.UserLogForm()
-    if request.method == 'POST':
+class LoginView(views.View):
+    def get(self, request):
+        form_obj = my_forms.UserLogForm()
+        return render(request, 'login.html', locals())
+
+    def post(self, request):
         form_obj = my_forms.UserLogForm(request.POST)
         if form_obj.is_valid():
             name = form_obj.cleaned_data.get('username')
@@ -32,8 +37,7 @@ def login(request):
                 request.session['username'] = name
                 return redirect(target_url)
             login_error = '用户名或密码错误'
-
-    return render(request, 'login.html', locals())
+        return render(request, 'login.html', locals())
 
 
 @login_auth
@@ -53,11 +57,14 @@ def book_list(request):
     return render(request, 'book_list.html', locals())
 
 
-@login_auth
-def book_add(request):
+class BookAdd(views.View):
+    @method_decorator(login_auth)
+    def get(self, request):
+        form_obj = my_forms.BookAddForm()
+        return render(request, 'book_add.html', locals())
 
-    form_obj = my_forms.BookAddForm()
-    if request.method == 'POST':
+    @method_decorator(login_auth)
+    def post(self, request):
         form_obj = my_forms.BookAddForm(request.POST)
         if form_obj.is_valid():
             author_pk_list = form_obj.cleaned_data.pop('author')
@@ -70,7 +77,7 @@ def book_add(request):
             models.Book2Author.objects.bulk_create(book2author_list)
             return redirect('book_list')
 
-    return render(request, 'book_add.html', locals())
+        return render(request, 'book_add.html', locals())
 
 
 @login_auth

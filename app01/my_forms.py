@@ -20,14 +20,14 @@ class UserRegForm(forms.Form):
                                },
                                widget=forms.widgets.PasswordInput())
     re_password = forms.CharField(min_length=4,
-                               max_length=8,
-                               label='确认密码',
-                               error_messages={
-                                   'min_length': '确认密码长度不能少于4位',
-                                   'max_length': '确认密码长度不能多余于8位',
-                                   'required': '确认密码不能为空'
-                               },
-                               widget=forms.widgets.PasswordInput())
+                                  max_length=8,
+                                  label='确认密码',
+                                  error_messages={
+                                      'min_length': '确认密码长度不能少于4位',
+                                      'max_length': '确认密码长度不能多余于8位',
+                                      'required': '确认密码不能为空'
+                                  },
+                                  widget=forms.widgets.PasswordInput())
     email = forms.EmailField(label='邮箱',
                              error_messages={
                                  'required': '确认密码不能为空'
@@ -39,7 +39,7 @@ class UserRegForm(forms.Form):
                             },
                             validators=[
                                 RegexValidator(r'^1[3|4|5|6|8][0-9]\d{4,8}$', '手机号格式不正确')
-                                ],
+                            ],
                             widget=forms.widgets.TextInput())
 
     def __init__(self, *args, **kwargs):
@@ -78,30 +78,26 @@ class UserLogForm(forms.Form):
                                                                   render_value=True))
 
 
-class BookAddForm(forms.Form):
+class BookForm(forms.Form):
     name = forms.CharField(label='图书名称',
-                           error_messages={
-                               'required': '图书名称不能为空'
-                           },
+                           error_messages={'required': '图书名称不能为空'},
                            widget=forms.widgets.TextInput())
+
     price = forms.DecimalField(label='价格',
-                           error_messages={
-                               'required': '图书价格不能为空'
-                           },
-                           widget=forms.widgets.TextInput())
+                               error_messages={'required': '图书价格不能为空'},
+                               widget=forms.widgets.TextInput())
+
     publish_date = forms.DateField(label='出版日期',
-                               error_messages={'required': '出版日期不能为空'},
-                               widget=forms.widgets.DateInput()
-                            )
+                                   error_messages={'required': '出版日期不能为空'},
+                                   widget=forms.widgets.DateInput())
+
     publish_id = forms.ChoiceField(label='出版社',
-                                error_messages={'required':'出版社不能为空'},
-                                widget=forms.widgets.Select()
-                                )
-    author = forms.MultipleChoiceField(
-        label='作者',
-        error_messages={'required':'作者不能为空'},
-        widget=forms.widgets.SelectMultiple()
-    )
+                                   error_messages={'required': '出版社不能为空'},
+                                   widget=forms.widgets.Select())
+
+    author = forms.MultipleChoiceField(label='作者',
+                                       error_messages={'required': '作者不能为空'},
+                                       widget=forms.widgets.SelectMultiple())
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -112,3 +108,13 @@ class BookAddForm(forms.Form):
         # 批量增加属性
         for field in self.fields:
             self.fields[field].widget.attrs.update({'class': 'form-control'})
+
+
+class BookAddForm(BookForm):
+    pass
+
+
+class BookEditForm(BookForm):
+    pass
+
+
