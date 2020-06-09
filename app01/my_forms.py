@@ -89,7 +89,7 @@ class BookForm(forms.Form):
 
     publish_date = forms.DateField(label='出版日期',
                                    error_messages={'required': '出版日期不能为空'},
-                                   widget=forms.widgets.DateInput())
+                                   widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
     publish_id = forms.ChoiceField(label='出版社',
                                    error_messages={'required': '出版社不能为空'},
